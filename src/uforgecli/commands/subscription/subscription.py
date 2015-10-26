@@ -10,9 +10,10 @@ from uforgecli.utils.uforgecli_utils import *
 from uforge.objects import uforge
 from subscription_admin import Subscription_Admins
 from subscription_role import Subscription_Roles
-from subscription_format import Subscription_Format
 from subscription_os import Subscription_Os
 from subscription_quota import Subscription_Quota
+from subscription_targetPlatform import Subscription_TargetPlatform
+from subscription_targetFormat import Subscription_TargetFormat
 from uforgecli.utils import uforgecli_utils
 import pyxb
 import shlex
@@ -36,14 +37,17 @@ class Subscription_Cmd(Cmd, CoreGlobal):
                 subscriptionAdmins = Subscription_Admins()
                 self.subCmds[subscriptionAdmins.cmd_name] = subscriptionAdmins
 
-                subscriptionFormat = Subscription_Format()
-                self.subCmds[subscriptionFormat.cmd_name] = subscriptionFormat
-
                 subscriptionOs = Subscription_Os()
                 self.subCmds[subscriptionOs.cmd_name] = subscriptionOs
 
                 subscriptionQuota = Subscription_Quota()
                 self.subCmds[subscriptionQuota.cmd_name] = subscriptionQuota
+
+                subscriptionTargetPlatform = Subscription_TargetPlatform()
+                self.subCmds[subscriptionTargetPlatform.cmd_name] = subscriptionTargetPlatform
+
+                subscriptionTargetFormat = Subscription_TargetFormat()
+                self.subCmds[subscriptionTargetFormat.cmd_name] = subscriptionTargetFormat
 
         def arg_list(self):
                 doParser = ArgumentParser(prog=self.cmd_name + " list", add_help=True, description="List all the subscription profiles for a given organization.  If no organization is provided the default organization is used.")

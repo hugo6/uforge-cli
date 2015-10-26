@@ -30,6 +30,8 @@ class Subscription_Roles(Cmd, CoreGlobal):
                 mandatory.add_argument('--name', dest='name', required=True, help="The name of the subscription profile")
                 mandatory.add_argument('--roles', dest='roles', nargs='+', required=True, help="The roles to add to the subscription profile")
                 optional.add_argument('--org', dest='org', required=False, help="The organization name. If no organization is provided, then the default organization is used.")
+                optional.add_argument('--allusers', dest='allusers', action="store_true", required=False, help="if set, all existing active users of that subscription profile benefit from the role addition.")
+
                 return doParser
 
         def do_add(self, args):
@@ -64,7 +66,7 @@ class Subscription_Roles(Cmd, CoreGlobal):
                                                 printer.out("Added " + new_role.name + " has role.")
 
                                         # call UForge API
-                                        self.api.Orgs(org.dbId).Subscriptions(item.dbId).Roles.Update(all_roles)
+                                        self.api.Orgs(org.dbId).Subscriptions(item.dbId).Roles.Update(Allusers=doArgs.allusers, body=all_roles)
                                         printer.out("Some roles added for subscription profile [" + doArgs.name + "]...", printer.OK)
 
                         if not exist:
@@ -90,6 +92,8 @@ class Subscription_Roles(Cmd, CoreGlobal):
                 mandatory.add_argument('--name', dest='name', required=True, help="the name of the subscription profile")
                 mandatory.add_argument('--roles', dest='roles', nargs='+', required=True, help="the roles to add to the subscription profile")
                 optional.add_argument('--org', dest='org', required=False, help="the organization name. If no organization is provided, then the default organization is used.")
+                optional.add_argument('--allusers', dest='allusers', action="store_true", required=False, help="if set, all existing active users of that subscription profile benefit from the role deletion.")
+
                 return doParser
 
         def do_remove(self, args):
@@ -120,7 +124,7 @@ class Subscription_Roles(Cmd, CoreGlobal):
                                                         printer.out("Removed " + role.name + " has role.")
 
                                         # call UForge API
-                                        self.api.Orgs(org.dbId).Subscriptions(item.dbId).Roles.Update(all_roles)
+                                        self.api.Orgs(org.dbId).Subscriptions(item.dbId).Roles.Update(Allusers=doArgs.allusers, body=all_roles)
                                         printer.out("Somes roles removed from subscription profile [" + doArgs.name + "]...", printer.OK)
 
                         if not exist:

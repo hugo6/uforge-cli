@@ -3,13 +3,14 @@ __author__="UShareSoft"
 from ussclicore.argumentParser import ArgumentParser, ArgumentParserError
 from ussclicore.cmd import Cmd, CoreGlobal
 from texttable import Texttable
-from user_format import User_Format_Cmd
 from user_admin import User_Admin_Cmd
 from user_quota import User_Quota_Cmd
 from user_os import User_Os_Cmd
 from user_role import User_Role_Cmd
 from user_api import User_Api_Cmd
 from user_org import User_Org_Cmd
+from user_targetPlatform import User_TargetPlatform_Cmd
+from user_targetFormat import User_TargetFormat_Cmd
 from ussclicore.utils import generics_utils, printer
 from uforgecli.utils.uforgecli_utils import *
 from uforgecli.utils import org_utils
@@ -31,9 +32,6 @@ class User_Cmd(Cmd, CoreGlobal):
                 if not hasattr(self, 'subCmds'):
                         self.subCmds = {}
 
-                userformat = User_Format_Cmd()
-                self.subCmds[userformat.cmd_name] = userformat
-
                 useradmin = User_Admin_Cmd()
                 self.subCmds[useradmin.cmd_name] = useradmin
 
@@ -51,6 +49,12 @@ class User_Cmd(Cmd, CoreGlobal):
 
                 userOrg = User_Org_Cmd()
                 self.subCmds[userOrg.cmd_name] = userOrg
+
+                userTargetPlatform = User_TargetPlatform_Cmd()
+                self.subCmds[userTargetPlatform.cmd_name] = userTargetPlatform
+
+                userTargetFormat = User_TargetFormat_Cmd()
+                self.subCmds[userTargetFormat.cmd_name] = userTargetFormat
 
         def arg_list(self):
                 doParser = ArgumentParser(prog=self.cmd_name+" list", add_help = True, description="List all the users in all the orgs. Only a root administrator can launch this command.")

@@ -33,6 +33,8 @@ class Subscription_Os(Cmd, CoreGlobal):
                 optional.add_argument('--version', dest='version', nargs='+', required=False, help="Operating system version (13, 5.6, ...) for which the current command should be executed. You can use Unix matching system (*,?,[seq],[!seq]) and multiple match separating by space.")
                 optional.add_argument('--arch', dest='arch', nargs='+', required=False, help="Operating system architecture (i386 | x86_64) for which the current command should be executed. You can use Unix matching system (*,?,[seq],[!seq]) and multiple match separating by space.")
                 optional.add_argument('--org', dest='org', required=False, help="The organization name. If no organization is provided, then the default organization is used.")
+                optional.add_argument('--allusers', dest='allusers', action="store_true", required=False, help="if set, all existing active users of that subscription profile benefit from the operating system addition.")
+
                 return doParser
 
         def do_add(self, args):
@@ -46,7 +48,7 @@ class Subscription_Os(Cmd, CoreGlobal):
                         osList = self.api.Orgs(org.dbId).Distributions.Getall()
                         osList = osList.distributions.distribution
                         if osList == None:
-                                printer.out("The organisation as no OS available")
+                                printer.out("The organization as no OS available")
 
                         if doArgs.os is not None:
                                 osList = compare(osList, doArgs.os, "name")
@@ -64,21 +66,13 @@ class Subscription_Os(Cmd, CoreGlobal):
                                         all_distros = distributions()
                                         all_distros.distributions = pyxb.BIND()
 
-                                        for f in subProfile.distributions.distribution:
-                                                all_distros.distributions.append(f)
-
                                         for nr in osList:
-                                                existRole = False
-                                                for item in all_distros.distributions.distribution:
-                                                        if item.name == nr.name:
-                                                                existRole = True
-                                                if not existRole:
-                                                        all_distros.distributions.append(nr)
+                                                all_distros.distributions.append(nr)
 
                         if not exist:
                                 printer.out("Subscription profile requested don't exist in [" + org.name + "]")
                                 return 0
-                        self.api.Orgs(org.dbId).Subscriptions(subProfileSelected.dbId).Distros.Update(all_distros)
+                        self.api.Orgs(org.dbId).Subscriptions(subProfileSelected.dbId).Distros.Update(Allusers=doArgs.allusers, body=all_distros)
                         printer.out("Some OS added for subscription profile [" + doArgs.name + "]...", printer.OK)
                         return 0
 
@@ -103,6 +97,8 @@ class Subscription_Os(Cmd, CoreGlobal):
                 optional.add_argument('--version', dest='version', nargs='+', required=False, help="Operating system version (13, 5.6, ...) for which the current command should be executed. You can use Unix matching system (*,?,[seq],[!seq]) and multiple match separating by space.")
                 optional.add_argument('--arch', dest='arch', nargs='+', required=False, help="Operating system architecture (i386 | x86_64) for which the current command should be executed. You can use Unix matching system (*,?,[seq],[!seq]) and multiple match separating by space.")
                 optional.add_argument('--org', dest='org', required=False, help="The organization name. If no organization is provided, then the default organization is used.")
+                optional.add_argument('--allusers', dest='allusers', action="store_true", required=False, help="if set, all existing active users of that subscription profile benefit from the operating system deletion.")
+
                 return doParser
 
         def do_remove(self, args):
@@ -116,7 +112,7 @@ class Subscription_Os(Cmd, CoreGlobal):
                         osList = self.api.Orgs(org.dbId).Distributions.Getall()
                         osList = osList.distributions.distribution
                         if osList == None:
-                                printer.out("The organisation as no OS available")
+                                printer.out("The organization as no OS available")
 
                         if doArgs.os is not None:
                                 osList = compare(osList, doArgs.os, "name")
@@ -124,6 +120,10 @@ class Subscription_Os(Cmd, CoreGlobal):
                                 osList = compare(osList, doArgs.version, "version")
                         if doArgs.arch is not None:
                                 osList = compare(osList, doArgs.arch, "arch")
+
+                        if len(osList) == 0:
+                                printer.out("There is no distribution matching the request.")
+                                return 0
 
                         subProfileSelected = None
                         exist = False
@@ -134,21 +134,18 @@ class Subscription_Os(Cmd, CoreGlobal):
                                         all_distros = distributions()
                                         all_distros.distributions = pyxb.BIND()
 
-                                        for f in subProfile.distributions.distribution:
-                                                all_distros.distributions.append(f)
-
-                                        for nr in osList:
-                                                existRole = False
-                                                for item in all_distros.distributions.distribution:
-                                                        if item.name == nr.name:
-                                                                existRole = True
-                                                if existRole:
-                                                        all_distros.distributions.append(nr)
+                                        for distribItem in subProfile.distributions.distribution:
+                                                for nr in osList:
+                                                        if distribItem.name == nr.name and distribItem.version == nr.version and distribItem.arch == nr.arch:
+                                                                distro = distribution()
+                                                                distro = nr
+                                                                distro.active = False
+                                                                all_distros.distributions.append(distro)
                                                         
                         if not exist:
                                 printer.out("Subscription profile requested don't exist in [" + org.name + "]")
                                 return 0
-                        self.api.Orgs(org.dbId).Subscriptions(subProfileSelected.dbId).Distros.Update(all_distros)
+                        self.api.Orgs(org.dbId).Subscriptions(subProfileSelected.dbId).Distros.Update(Allusers=doArgs.allusers, body=all_distros)
                         printer.out("Some OS removed for subscription profile [" + doArgs.name + "]...", printer.OK)
                         return 0
 

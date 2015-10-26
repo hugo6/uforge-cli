@@ -103,7 +103,7 @@ class Org_Repo_Cmd(Cmd, CoreGlobal):
                 doParser.print_help()
 
         def arg_create(self):
-                doParser = ArgumentParser(add_help = True, description="Create a repository in the organisation")
+                doParser = ArgumentParser(add_help = True, description="Create a repository in the organization")
 
                 mandatory = doParser.add_argument_group("mandatory arguments")
                 optional = doParser.add_argument_group("optional arguments")
@@ -151,7 +151,7 @@ class Org_Repo_Cmd(Cmd, CoreGlobal):
                 doParser.print_help()
 
         def arg_delete(self):
-                doParser = ArgumentParser(add_help = True, description="Delete a repository in the organisation")
+                doParser = ArgumentParser(add_help = True, description="Delete a repository in the organization")
 
                 mandatory = doParser.add_argument_group("mandatory arguments")
                 optional = doParser.add_argument_group("optional arguments")
@@ -185,7 +185,7 @@ class Org_Repo_Cmd(Cmd, CoreGlobal):
                 doParser.print_help()
 
         def arg_update(self):
-                doParser = ArgumentParser(add_help = True, description="Update a repository in the organisation")
+                doParser = ArgumentParser(add_help = True, description="Update a repository in the organization")
 
                 mandatory = doParser.add_argument_group("mandatory arguments")
                 optional = doParser.add_argument_group("optional arguments")
