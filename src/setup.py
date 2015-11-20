@@ -9,7 +9,7 @@ requires=[
            'uforge_python_sdk==3.6.0',
                     'httplib2==0.9',
                     'cmd2==0.6.7',                    
-                    'texttable==0.8.1',
+                    'texttable>=0.8.1',
                     'progressbar==2.3',
                     'argparse',
                     'pyparsing==2.0.2',
