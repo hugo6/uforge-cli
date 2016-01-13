@@ -8,7 +8,8 @@ import sys
 import os
 
 from uforgecli.commands.user.user import User_Cmd
-from uforgecli.commands.user.user_format import User_Format_Cmd
+from uforgecli.commands.user.user_targetFormat import User_TargetFormat_Cmd
+from uforgecli.commands.user.user_targetPlatform import User_TargetPlatform_Cmd
 from uforgecli.commands.user.user_quota import User_Quota_Cmd
 from uforgecli.commands.user.user_admin import User_Admin_Cmd
 from uforgecli.commands.user.user_os import User_Os_Cmd
@@ -19,7 +20,8 @@ from uforgecli.commands.entitlement.entitlement import Entitlement_Cmd
 from uforgecli.commands.subscription.subscription import Subscription_Cmd
 from uforgecli.commands.subscription.subscription_admin import Subscription_Admins
 from uforgecli.commands.subscription.subscription_role import Subscription_Roles
-from uforgecli.commands.subscription.subscription_format import Subscription_Format
+from uforgecli.commands.subscription.subscription_targetFormat import Subscription_TargetFormat
+from uforgecli.commands.subscription.subscription_targetPlatform import Subscription_TargetPlatform
 from uforgecli.commands.subscription.subscription_os import Subscription_Os
 from uforgecli.commands.subscription.subscription_quota import Subscription_Quota
 from uforgecli.commands.role.role import Role_Cmd
@@ -33,6 +35,8 @@ from uforgecli.commands.org.org_os import Org_Os_Cmd
 from uforgecli.commands.org.org_repo import Org_Repo_Cmd
 from uforgecli.commands.org.org_repo_os import Org_Repo_Os_Cmd
 from uforgecli.commands.org.org_format import Org_Format_Cmd
+from uforgecli.commands.org.org_targetFormat import Org_TargetFormat_Cmd
+from uforgecli.commands.org.org_targetPlatform import Org_TargetPlatform_Cmd
 from uforgecli.commands.os.os import Os_Cmd
 from uforgecli.commands.os.os_milestone import Os_Milestone_Cmd
 from uforgecli.commands.pimages.pimages import Pimages_Cmd
@@ -49,12 +53,33 @@ login = os.environ['TEST_USER']
 password = os.environ['TEST_PASSWORD']
 url = os.environ['TEST_URL']
 
+def get_targetFormat_id(targetFormat, name):
+        stdout = sys.stdout
+        sys.stdout = open('stdout_file', 'w')
+        targetFormat.do_list(None)
+        sys.stdout = stdout
+        cmd = os.popen("cat stdout_file | grep "+name+" | grep -v Getting | cut -d '|' -f2")
+        id = cmd.read().rstrip()
+        os.remove("stdout_file")
+        return id
+
+def get_targetPlatform_id(targetPlatform, name):
+        stdout = sys.stdout
+        sys.stdout = open('stdout_file', 'w')
+        targetPlatform.do_list(None)
+        sys.stdout = stdout
+        cmd = os.popen("cat stdout_file | grep "+name+" | grep -v Getting | cut -d '|' -f2")
+        id = cmd.read().rstrip()
+        os.remove("stdout_file")
+        return id
+
 userTest = 'root'
 userTest2 = 'pedro'
 userToCreate = 'Frankenstein'
 userToCreatePassword = "Hakunamatata"
 
-userFormatsTest = 'lxc kvm'
+userTargetFormatsTest = 'VirtualBox Cloudwatt'
+userTargetPlatformsTest = 'Amazon Eucalyptus'
 
 subscriptionTest = "test"
 
@@ -69,8 +94,10 @@ subscriptionAdminTest1 = 'pedro'
 subscriptionAdminTest2 = 'root'
 subscriptionRoleTest1 = 'consumer'
 subscriptionRoleTest2 = 'designer'
-subscriptionFormatTest1 = 'esx'
-subscriptionFormatTest2 = 'emi-xen'
+subscriptionTargetFormatTest1 = 'Cloudwatt'
+subscriptionTargetFormatTest2 = 'ISO'
+subscriptionTargetPlatformTest1 = 'Flexiant'
+subscriptionTargetPlatformTest2 = 'Nimbula'
 subscriptionOsTest1 = 'Windows'
 
 roleRoleTest = 'partner'
@@ -111,32 +138,46 @@ usergrpTestAddAccounts = 'root'
 usergrpTestUserAddAfter = 'dimitri'
 
 orgFormatEnableDisable = 'qcow2 ovf09'
+orgTargetFormatCategoryVirtual = 'Virtual'
+orgTargetFormatCategoryCloud = 'Cloud'
+orgTargetFormatCategoryPhysical = 'Physical'
+orgTargetFormatCreateVirtual = 'VirtualBoxTest'
+orgTargetFormatCreateCloud = 'OpenstackQcow2Test'
+orgTargetFormatCreatePhysical = 'IsoTest'
+orgTargetFormatAbiquo = 'Abiquo'
+orgTargetFormatsEnableDisable = 'VirtualBox Cloudwatt'
+orgTargetPlatformCreateAbiquo = 'AbiquoTest'
+orgTargetPlatformOpenStack = 'OpenStack'
+orgTargetPlatformsEnableDisable = 'Amazon Eucalyptus'
 
 class UserTestSuite(unittest.TestSuite):
         def __init__(self):
                 unittest.TestSuite.__init__(self,map(TestUser,
-                                                     ("test_user_02_format_disable",
-                                                      "test_user_03_format_enable",
-                                                      "test_user_05_disable",
-                                                      "test_user_04_enable",
-                                                      "test_user_10_admin_demote",
-                                                      "test_user_11_admin_promote",
-                                                      "test_user_13_os_disable",
-                                                      "test_user_14_os_enable",
-                                                      "test_user_16_role_add",
-                                                      "test_user_17_role_remove",
-                                                      "test_user_20_org_add",
-                                                      "test_user_21_org_remove",
-                                                      "test_user_01_format_list",
-                                                      "test_user_06_quota_list",
-                                                      "test_user_07_list",
-                                                      "test_user_08_info",
-                                                      "test_user_09_quota_modify",
-                                                      "test_user_12_os_list",
-                                                      "test_user_15_role_list",
-                                                      "test_user_18_api_quota",
-                                                      "test_user_19_org_list",
-                                                      "test_user_22_create")))
+                                                     ("test_user_02_targetFormat_disable",
+                                                      "test_user_03_targetFormat_enable",
+                                                      "test_user_05_targetPlatform_disable",
+                                                      "test_user_06_targetPlatform_enable",
+                                                      "test_user_08_disable",
+                                                      "test_user_07_enable",
+                                                      "test_user_13_admin_demote",
+                                                      "test_user_14_admin_promote",
+                                                      "test_user_16_os_disable",
+                                                      "test_user_17_os_enable",
+                                                      "test_user_19_role_add",
+                                                      "test_user_20_role_remove",
+                                                      "test_user_23_org_add",
+                                                      "test_user_24_org_remove",
+                                                      "test_user_01_targetFormat_list",
+                                                      "test_user_04_targetPlatform_list",
+                                                      "test_user_09_quota_list",
+                                                      "test_user_10_list",
+                                                      "test_user_11_info",
+                                                      "test_user_12_quota_modify",
+                                                      "test_user_15_os_list",
+                                                      "test_user_18_role_list",
+                                                      "test_user_21_api_quota",
+                                                      "test_user_22_org_list",
+                                                      "test_user_25_create")))
 
 
 
@@ -149,133 +190,151 @@ class TestMotherClass(unittest.TestCase):
 
 class TestUser(TestMotherClass):
 
-        def test_user_01_format_list(self):
-                user_format = User_Format_Cmd()
-                user_format.set_globals(api,login,password)
-                t = user_format.do_list("--account "+userTest)
+        def test_user_01_targetFormat_list(self):
+                user_targetFormat = User_TargetFormat_Cmd()
+                user_targetFormat.set_globals(api,login,password)
+                t = user_targetFormat.do_list("--account "+userTest)
                 self.assertEquals(t,0)
 
-        def test_user_02_format_disable(self):
-                user_format = User_Format_Cmd()
-                user_format.set_globals(api,login,password)
-                t = user_format.do_disable("--account "+userTest+" --formats "+userFormatsTest)
+        def test_user_02_targetFormat_disable(self):
+                user_targetFormat = User_TargetFormat_Cmd()
+                user_targetFormat.set_globals(api,login,password)
+                t = user_targetFormat.do_disable("--account "+userTest+" --targetFormats "+userTargetFormatsTest)
                 self.assertEquals(t,0)
 
-        def test_user_03_format_enable(self):
-                user_format = User_Format_Cmd()
-                user_format.set_globals(api,login,password)
-                t = user_format.do_enable("--account "+userTest+" --formats "+userFormatsTest)
+        def test_user_03_targetFormat_enable(self):
+                user_targetFormat = User_TargetFormat_Cmd()
+                user_targetFormat.set_globals(api,login,password)
+                t = user_targetFormat.do_enable("--account "+userTest+" --targetFormats "+userTargetFormatsTest)
                 self.assertEquals(t,0)
 
-        def test_user_04_enable(self):
+        def test_user_04_targetPlatform_list(self):
+                user_targetPlatform = User_TargetPlatform_Cmd()
+                user_targetPlatform.set_globals(api,login,password)
+                t = user_targetPlatform.do_list("--account "+userTest)
+                self.assertEquals(t,0)
+
+        def test_user_05_targetPlatform_disable(self):
+                user_targetPlatform = User_TargetPlatform_Cmd()
+                user_targetPlatform.set_globals(api,login,password)
+                t = user_targetPlatform.do_disable("--account "+userTest+" --targetPlatforms "+userTargetPlatformsTest)
+                self.assertEquals(t,0)
+
+        def test_user_06_targetPlatform_enable(self):
+                user_targetPlatform = User_TargetPlatform_Cmd()
+                user_targetPlatform.set_globals(api,login,password)
+                t = user_targetPlatform.do_enable("--account "+userTest+" --targetPlatforms "+userTargetPlatformsTest)
+                self.assertEquals(t,0)
+
+        def test_user_07_enable(self):
                 user = User_Cmd()
                 user.set_globals(api,login,password)
                 t = user.do_enable("--account "+userTest2)
                 self.assertEquals(t,0)
 
-        def test_user_05_disable(self):
+        def test_user_08_disable(self):
                 user = User_Cmd()
                 user.set_globals(api,login,password)
                 t = user.do_disable("--account "+userTest2)
                 self.assertEquals(t,0)
 
-        def test_user_06_quota_list(self):
+        def test_user_09_quota_list(self):
                 user_quota = User_Quota_Cmd()
                 user_quota.set_globals(api,login,password)
                 t = user_quota.do_list("--account "+userTest2)
                 self.assertEquals(t,0)
 
-        def test_user_07_list(self):
+        def test_user_10_list(self):
                 user = User_Cmd()
                 user.set_globals(api,login,password)
                 t = user.do_list(None)
                 self.assertEquals(t,0)
 
-        def test_user_08_info(self):
+        def test_user_11_info(self):
                 user = User_Cmd()
                 user.set_globals(api,login,password)
                 t = user.do_info("--account "+userTest2)
                 self.assertEquals(t,0)
 
-        def test_user_09_quota_modify(self):
+        def test_user_12_quota_modify(self):
                 user_quota = User_Quota_Cmd()
                 user_quota.set_globals(api,login,password)
                 t = user_quota.do_modify("--account "+userTest2+" --type "+userQuotaTypeTest+" --limit "+userQuotaLimitTest)
                 self.assertEquals(t,0)
 
-        def test_user_10_admin_demote(self):
+        def test_user_13_admin_demote(self):
                 user_admin = User_Admin_Cmd()
                 user_admin.set_globals(api,login,password)
                 t = user_admin.do_demote("--account "+userTest2)
                 self.assertEquals(t,0)
 
-        def test_user_11_admin_promote(self):
+        def test_user_14_admin_promote(self):
                 user_admin = User_Admin_Cmd()
                 user_admin.set_globals(api,login,password)
                 t = user_admin.do_promote("--account "+userTest2)
                 self.assertEquals(t,0)
 
-        def test_user_12_os_list(self):
+        def test_user_15_os_list(self):
                 user_os = User_Os_Cmd()
                 user_os.set_globals(api,login,password)
                 t = user_os.do_list("--account "+userTest)
                 self.assertEquals(t,0)
 
-        def test_user_13_os_disable(self):
+        def test_user_16_os_disable(self):
                 user_os = User_Os_Cmd()
                 user_os.set_globals(api,login,password)
-                t = user_os.do_disable("--account "+userTest+" --name Cent*")
+                t = user_os.do_disable("--account "+userTest+" --name Cen*")
                 self.assertEquals(t,0)
 
-        def test_user_14_os_enable(self):
+        def test_user_17_os_enable(self):
                 user_os = User_Os_Cmd()
                 user_os.set_globals(api,login,password)
-                t = user_os.do_enable("--account "+userTest+" --name Cent*")
+                t = user_os.do_enable("--account "+userTest+" --name Cen*")
                 self.assertEquals(t,0)
 
-        def test_user_15_role_list(self):
+        def test_user_18_role_list(self):
                 user_role = User_Role_Cmd()
                 user_role.set_globals(api,login,password)
                 t = user_role.do_list("--account "+userTest)
                 self.assertEquals(t,0)
 
-        def test_user_16_role_add(self):
+        def test_user_19_role_add(self):
                 user_role= User_Role_Cmd()
                 user_role.set_globals(api,login,password)
                 t = user_role.do_add("--account "+userTest+" --roles "+userRoleTest1+" "+userRoleTest2)
                 self.assertEquals(t,0)
 
-        def test_user_17_role_remove(self):
+        def test_user_20_role_remove(self):
                 user_role = User_Role_Cmd()
                 user_role.set_globals(api,login,password)
                 t = user_role.do_remove("--account "+userTest+" --roles "+userRoleTest1+" "+userRoleTest2)
                 self.assertEquals(t,0)
 
-        def test_user_18_api_quota(self):
+        def test_user_21_api_quota(self):
                 user_api = User_Api_Cmd()
                 user_api.set_globals(api,login,password)
-                t = user_api.do_quota("--account "+userTest2+" --apimax 50")
+                t = user_api.do_quota("--account "+userTest+" --apimax 50")
                 self.assertEquals(t,0)
 
-        def test_user_19_org_list(self):
+        def test_user_22_org_list(self):
                 user_org = User_Org_Cmd()
                 user_org.set_globals(api,login,password)
                 t = user_org.do_list("--account "+userTest)
                 self.assertEquals(t,0)
 
-        def test_user_20_org_add(self):
+        def test_user_23_org_add(self):
                 user_org = User_Org_Cmd()
                 user_org.set_globals(api,login,password)
                 t = user_org.do_add("--account "+userTest2+" --admin")
                 self.assertEquals(t,0)
 
-        def test_user_21_org_remove(self):
+        def test_user_24_org_remove(self):
                 user_org = User_Org_Cmd()
                 user_org.set_globals(api,login,password)
                 t = user_org.do_remove("--account "+userTest2+" --admin")
                 self.assertEquals(t,0)
 
-        def test_user_22_create(self):
+        def test_user_25_create(self):
                 userList = api.Users.Getall()
                 exist = False
                 for item in userList.users.user:
@@ -314,10 +373,12 @@ class SubscriptionTestSuite(unittest.TestSuite):
                                                       "test_subscription_09_admin_remove",
                                                       "test_subscription_10_role_add",
                                                       "test_subscription_11_role_remove",
-                                                      "test_subscription_12_format_add",
-                                                      "test_subscription_13_format_remove",
-                                                      "test_subscription_14_os_add",
-                                                      "test_subscription_15_os_remove",
+                                                      "test_subscription_12_targetFormat_add",
+                                                      "test_subscription_13_targetFormat_remove",
+                                                      "test_subscription_14_targetPlatform_add",
+                                                      "test_subscription_15_targetPlatform_remove",
+                                                      "test_subscription_16_os_add",
+                                                      "test_subscription_17_os_remove",
                                                       "test_subscription_05_delete",
                                                       )))
 
@@ -389,31 +450,43 @@ class TestSubscription(TestMotherClass):
                 t = subscription_role.do_remove("--name "+subscriptionTest+" --roles "+subscriptionRoleTest1+" "+subscriptionRoleTest2)
                 self.assertEquals(t,0)
 
-        def test_subscription_12_format_add(self):
-                subscription_format = Subscription_Format()
-                subscription_format.set_globals(api,login,password)
-                t = subscription_format.do_add("--name "+subscriptionTest+" --formats "+subscriptionRoleTest1+" "+subscriptionRoleTest2)
+        def test_subscription_12_targetFormat_add(self):
+                subscription_targetFormat = Subscription_TargetFormat()
+                subscription_targetFormat.set_globals(api,login,password)
+                t = subscription_targetFormat.do_add("--name "+subscriptionTest+" --targetFormats "+subscriptionTargetFormatTest1+" "+subscriptionTargetFormatTest2)
                 self.assertEquals(t,0)
 
-        def test_subscription_13_format_remove(self):
-                subscription_format = Subscription_Format()
-                subscription_format.set_globals(api,login,password)
-                t = subscription_format.do_remove("--name "+subscriptionTest+" --formats "+subscriptionFormatTest1+" "+subscriptionFormatTest2)
+        def test_subscription_13_targetFormat_remove(self):
+                subscription_targetFormat = Subscription_TargetFormat()
+                subscription_targetFormat.set_globals(api,login,password)
+                t = subscription_targetFormat.do_remove("--name "+subscriptionTest+" --targetFormats "+subscriptionTargetFormatTest1+" "+subscriptionTargetFormatTest2)
                 self.assertEquals(t,0)
 
-        def test_subscription_14_os_add(self):
+        def test_subscription_14_targetPlatform_add(self):
+                subscription_targetPlatform = Subscription_TargetPlatform()
+                subscription_targetPlatform.set_globals(api,login,password)
+                t = subscription_targetPlatform.do_add("--name "+subscriptionTest+" --targetPlatforms "+subscriptionTargetPlatformTest1+" "+subscriptionTargetPlatformTest2)
+                self.assertEquals(t,0)
+
+        def test_subscription_15_targetPlatform_remove(self):
+                subscription_targetPlatform = Subscription_TargetPlatform()
+                subscription_targetPlatform.set_globals(api,login,password)
+                t = subscription_targetPlatform.do_remove("--name "+subscriptionTest+" --targetPlatforms "+subscriptionTargetPlatformTest1+" "+subscriptionTargetPlatformTest2)
+                self.assertEquals(t,0)
+
+        def test_subscription_16_os_add(self):
                 subscription_os = Subscription_Os()
                 subscription_os.set_globals(api,login,password)
                 t = subscription_os.do_add("--name "+subscriptionTest+" --os "+subscriptionOsTest1)
                 self.assertEquals(t,0)
 
-        def test_subscription_15_os_remove(self):
+        def test_subscription_17_os_remove(self):
                 subscription_os = Subscription_Os()
                 subscription_os.set_globals(api,login,password)
                 t = subscription_os.do_remove("--name "+subscriptionTest+" --os "+subscriptionOsTest1)
                 self.assertEquals(t,0)
 
-        def test_subscription_15_quota_update(self):
+        def test_subscription_18_quota_update(self):
                 subscription_quota = Subscription_Quota()
                 subscription_quota.set_globals(api,login,password)
                 t = subscription_quota.do_update(userSubscriptionQuotaUpdate)
@@ -500,7 +573,7 @@ class TestImages(TestMotherClass):
 class OrgTestSuite(unittest.TestSuite):
         def __init__(self):
                 unittest.TestSuite.__init__(self,map(TestOrg,
-                                                     ("test_org_24_create",
+                                                     ("test_org_44_create",
                                                       "test_org_05_category_create",
                                                       "test_org_04_category_list",
                                                       "test_org_06_category_delete",
@@ -522,7 +595,27 @@ class OrgTestSuite(unittest.TestSuite):
                                                       "test_org_17_repo_delete",
                                                       "test_org_22_format_enable",
                                                       "test_org_21_format_list",
-                                                      "test_org_23_format_disable"
+                                                      "test_org_23_format_disable",
+                                                      "test_org_25_targetFormat_createVirtual",
+                                                      "test_org_26_targetFormat_createCloud",
+                                                      "test_org_27_targetFormat_createPhysical",
+                                                      "test_org_24_targetFormat_list",
+                                                      "test_org_28_targetFormat_update",
+                                                      "test_org_29_targetFormat_addTargetPlatform",
+                                                      "test_org_30_targetFormat_listTargetPlatform",
+                                                      "test_org_31_targetFormat_removeTargetPlatform",
+                                                      "test_org_32_targetFormat_disable",
+                                                      "test_org_33_targetFormat_enable",
+                                                      "test_org_34_targetFormat_delete",
+                                                      "test_org_36_targetPlatform_create",
+                                                      "test_org_35_targetPlatform_list",
+                                                      "test_org_37_targetPlatform_update",
+                                                      "test_org_38_targetPlatform_addTargetFormat",
+                                                      "test_org_39_targetPlatform_listTargetFormat",
+                                                      "test_org_40_targetPlatform_removeTargetFormat",
+                                                      "test_org_41_targetPlatform_disable",
+                                                      "test_org_42_targetPlatform_enable",
+                                                      "test_org_43_targetPlatform_delete",
                                                       )))
 
 class TestOrg(TestMotherClass):
@@ -674,7 +767,183 @@ class TestOrg(TestMotherClass):
                 t = org_format.do_disable("--format " + orgFormatEnableDisable)
                 self.assertEquals(t,0)
 
-        def test_org_24_create(self):
+        def test_org_24_targetFormat_list(self):
+                org_targetFormat = Org_TargetFormat_Cmd()
+                org_targetFormat.set_globals(api,login,password)
+                t = org_targetFormat.do_list(None)
+                self.assertEquals(t,0)
+
+        def test_org_25_targetFormat_createVirtual(self):
+                org_targetFormat = Org_TargetFormat_Cmd()
+                org_targetFormat.set_globals(api,login,password)
+                t = org_targetFormat.do_create("--name " + orgTargetFormatCreateVirtual + " --format vbox --category " + orgTargetFormatCategoryVirtual + " --type virtual")
+                self.assertEquals(t,0)
+
+        def test_org_26_targetFormat_createCloud(self):
+                org_targetFormat = Org_TargetFormat_Cmd()
+                org_targetFormat.set_globals(api,login,password)
+                t = org_targetFormat.do_create("--name " + orgTargetFormatCreateCloud + " --format openstackqcow2 --category " + orgTargetFormatCategoryCloud + " --type cloud -- credAccountType openstack --file data/UShareSoft.svg")
+                self.assertEquals(t,0)
+
+        def test_org_27_targetFormat_createPhysical(self):
+                org_targetFormat = Org_TargetFormat_Cmd()
+                org_targetFormat.set_globals(api,login,password)
+                t = org_targetFormat.do_create("--name " + orgTargetFormatCreatePhysical + " --format ISO --category " + orgTargetFormatCategoryPhysical + " --type physical")
+                self.assertEquals(t,0)
+
+        def test_org_28_targetFormat_update(self):
+                org_targetFormat = Org_TargetFormat_Cmd()
+                org_targetFormat.set_globals(api,login,password)
+                id = get_targetFormat_id(org_targetFormat, orgTargetFormatCreatePhysical)
+                if id is not None and id !="":
+                        t = org_targetFormat.do_update("--id " + id + " --name " + orgTargetFormatCreatePhysical+"Updated")
+                        self.assertEquals(t,0)
+                else:
+                        raise unittest.SkipTest("No target format to update")
+
+        def test_org_29_targetFormat_addTargetPlatform(self):
+                org_targetFormat = Org_TargetFormat_Cmd()
+                org_targetFormat.set_globals(api,login,password)
+                id = get_targetFormat_id(org_targetFormat, orgTargetFormatCreateCloud)
+                if id is not None and id !="":
+                        t = org_targetFormat.do_addTargetPlatform("--id " + id + " --targetPlatforms " + orgTargetPlatformOpenStack)
+                        self.assertEquals(t,0)
+                else:
+                        raise unittest.SkipTest("No target format to add target platforms")
+
+        def test_org_30_targetFormat_listTargetPlatform(self):
+                org_targetFormat = Org_TargetFormat_Cmd()
+                org_targetFormat.set_globals(api,login,password)
+                id = get_targetFormat_id(org_targetFormat, orgTargetFormatCreateCloud)
+                if id is not None and id !="":
+                        t = org_targetFormat.do_listTargetPlatform("--id " + id)
+                        self.assertEquals(t,0)
+                else:
+                        raise unittest.SkipTest("No target format to list target platforms")
+
+        def test_org_31_targetFormat_removeTargetPlatform(self):
+                org_targetFormat = Org_TargetFormat_Cmd()
+                org_targetFormat.set_globals(api,login,password)
+                id = get_targetFormat_id(org_targetFormat, orgTargetFormatCreateCloud)
+                if id is not None and id !="":
+                        t = org_targetFormat.do_removeTargetPlatform("--id " + id + " --targetPlatforms " + orgTargetPlatformOpenStack)
+                        self.assertEquals(t,0)
+                else:
+                        raise unittest.SkipTest("No target format to remove target platforms")
+
+        def test_org_32_targetFormat_disable(self):
+                org_targetFormat = Org_TargetFormat_Cmd()
+                org_targetFormat.set_globals(api,login,password)
+                t = org_targetFormat.do_disable("--targetFormats " + orgTargetFormatsEnableDisable)
+                self.assertEquals(t,0)
+
+        def test_org_33_targetFormat_enable(self):
+                org_targetFormat = Org_TargetFormat_Cmd()
+                org_targetFormat.set_globals(api,login,password)
+                t = org_targetFormat.do_enable("--targetFormats " + orgTargetFormatsEnableDisable)
+                self.assertEquals(t,0)
+
+        def test_org_34_targetFormat_delete(self):
+                org_targetFormat = Org_TargetFormat_Cmd()
+                org_targetFormat.set_globals(api,login,password)
+                msgNoDeleted = None
+                id = get_targetFormat_id(org_targetFormat, orgTargetFormatCreateVirtual)
+                if id is not None and id !="":
+                        t = org_targetFormat.do_delete("--id " + id)
+                        self.assertEquals(t,0)
+                else:
+                        msgNoDeleted = "virtual "
+                id = get_targetFormat_id(org_targetFormat, orgTargetFormatCreatePhysical+"Updated")
+                if id is not None and id !="":
+                        t = org_targetFormat.do_delete("--id " + id)
+                        self.assertEquals(t,0)
+                else:
+                        msgNoDeleted = msgNoDeleted + "physical "
+                id = get_targetFormat_id(org_targetFormat, orgTargetFormatCreateCloud)
+                if id is not None and id !="":
+                        t = org_targetFormat.do_delete("--id " + id)
+                        self.assertEquals(t,0)
+                else:
+                        msgNoDeleted = msgNoDeleted + "cloud"
+                if msgNoDeleted is not None:
+                        raise unittest.SkipTest("no target format of type " + msgNoDeleted + " to delete")
+
+        def test_org_35_targetPlatform_list(self):
+                org_targetPlatform = Org_TargetPlatform_Cmd()
+                org_targetPlatform.set_globals(api,login,password)
+                t = org_targetPlatform.do_list(None)
+                self.assertEquals(t,0)
+
+        def test_org_36_targetPlatform_create(self):
+                org_targetPlatform = Org_TargetPlatform_Cmd()
+                org_targetPlatform.set_globals(api,login,password)
+                t = org_targetPlatform.do_create("--name " + orgTargetPlatformCreateAbiquo + " --type abiquo --file data/UShareSoft.svg")
+                self.assertEquals(t,0)
+
+        def test_org_37_targetPlatform_update(self):
+                org_targetPlatform = Org_TargetPlatform_Cmd()
+                org_targetPlatform.set_globals(api,login,password)
+                id = get_targetPlatform_id(org_targetPlatform, orgTargetPlatformCreateAbiquo)
+                if id is not None and id !="":
+                        t = org_targetPlatform.do_update("--id " + id + " --name " + orgTargetPlatformCreateAbiquo+"Updated")
+                        self.assertEquals(t,0)
+                else:
+                        raise unittest.SkipTest("No target platform to update")
+
+        def test_org_38_targetPlatform_addTargetFormat(self):
+                org_targetPlatform = Org_TargetPlatform_Cmd()
+                org_targetPlatform.set_globals(api,login,password)
+                id = get_targetPlatform_id(org_targetPlatform, orgTargetPlatformCreateAbiquo+"Updated")
+                if id is not None and id !="":
+                        t = org_targetPlatform.do_addTargetFormat("--id " + id + " --targetFormats " + orgTargetFormatAbiquo)
+                        self.assertEquals(t,0)
+                else:
+                        raise unittest.SkipTest("No target platform to add target formats")
+
+        def test_org_39_targetPlatform_listTargetFormat(self):
+                org_targetPlatform = Org_TargetPlatform_Cmd()
+                org_targetPlatform.set_globals(api,login,password)
+                id = get_targetPlatform_id(org_targetPlatform, orgTargetPlatformCreateAbiquo+"Updated")
+                if id is not None and id !="":
+                        t = org_targetPlatform.do_listTargetFormat("--id " + id)
+                        self.assertEquals(t,0)
+                else:
+                        raise unittest.SkipTest("No target platform to list target formats")
+
+        def test_org_40_targetPlatform_removeTargetFormat(self):
+                org_targetPlatform = Org_TargetPlatform_Cmd()
+                org_targetPlatform.set_globals(api,login,password)
+                id = get_targetPlatform_id(org_targetPlatform, orgTargetPlatformCreateAbiquo+"Updated")
+                if id is not None and id !="":
+                        t = org_targetPlatform.do_removeTargetFormat("--id " + id + " --targetFormats " + orgTargetFormatAbiquo)
+                        self.assertEquals(t,0)
+                else:
+                        raise unittest.SkipTest("No target platform to remove target formats")
+
+        def test_org_41_targetPlatform_disable(self):
+                org_targetPlatform = Org_TargetPlatform_Cmd()
+                org_targetPlatform.set_globals(api,login,password)
+                t = org_targetPlatform.do_disable("--targetPlatforms " + orgTargetPlatformsEnableDisable)
+                self.assertEquals(t,0)
+
+        def test_org_42_targetPlatform_enable(self):
+                org_targetPlatform = Org_TargetPlatform_Cmd()
+                org_targetPlatform.set_globals(api,login,password)
+                t = org_targetPlatform.do_enable("--targetPlatforms " + orgTargetPlatformsEnableDisable)
+                self.assertEquals(t,0)
+
+        def test_org_43_targetPlatform_delete(self):
+                org_targetPlatform = Org_TargetPlatform_Cmd()
+                org_targetPlatform.set_globals(api,login,password)
+                msgNoDeleted = None
+                id = get_targetPlatform_id(org_targetPlatform, orgTargetPlatformCreateAbiquo+"Updated")
+                if id is not None and id !="":
+                        t = org_targetPlatform.do_delete("--id " + id)
+                        self.assertEquals(t,0)
+                else:
+                        raise unittest.SkipTest("no target platform to delete")
+
+        def test_org_44_create(self):
                 orgs = api.Orgs(orgNumber).Getall()
                 exist = False
                 for item in orgs.orgs.org:

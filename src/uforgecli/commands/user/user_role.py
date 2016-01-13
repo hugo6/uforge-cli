@@ -101,7 +101,7 @@ class User_Role_Cmd(Cmd, CoreGlobal):
                                                         checkedRoleList.append(r)
                                                         break
                                         if found == False:
-                                                printer.out("Unable to find role with name [" + r + "] in organisation [" + org.name + "]", printer.ERROR)
+                                                printer.out("Unable to find role with name [" + r + "] in organization [" + org.name + "]", printer.ERROR)
                                                 return 0
 
                                 # Create a new roles structures

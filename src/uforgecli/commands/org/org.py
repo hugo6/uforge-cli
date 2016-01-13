@@ -14,6 +14,8 @@ from org_golden import Org_Golden_Cmd
 from org_os import Org_Os_Cmd
 from org_repo import Org_Repo_Cmd
 from org_format import Org_Format_Cmd
+from org_targetPlatform import Org_TargetPlatform_Cmd
+from org_targetFormat import Org_TargetFormat_Cmd
 from uforge.objects import uforge
 from uforgecli.utils.compare_utils import compare
 from uforgecli.utils import *
@@ -54,6 +56,12 @@ class Org_Cmd(Cmd, CoreGlobal):
 
                 orgFormat = Org_Format_Cmd()
                 self.subCmds[orgFormat.cmd_name] = orgFormat
+
+                orgTargetPlatform = Org_TargetPlatform_Cmd()
+                self.subCmds[orgTargetPlatform.cmd_name] = orgTargetPlatform
+
+                orgTargetFormat = Org_TargetFormat_Cmd()
+                self.subCmds[orgTargetFormat.cmd_name] = orgTargetFormat
 
         def arg_list(self):
                 doParser = ArgumentParser(add_help = True, description="List all the organizations")

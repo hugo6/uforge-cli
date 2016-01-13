@@ -24,7 +24,7 @@ class Org_Repo_Os_Cmd(Cmd, CoreGlobal):
                 super(Org_Repo_Os_Cmd, self).__init__()
 
         def arg_list(self):
-                doParser = ArgumentParser(add_help = True, description="List distributions belonging to a repository in the organisation")
+                doParser = ArgumentParser(add_help = True, description="List distributions belonging to a repository in the organization")
 
                 mandatory = doParser.add_argument_group("mandatory arguments")
                 optional = doParser.add_argument_group("optional arguments")
@@ -82,7 +82,7 @@ class Org_Repo_Os_Cmd(Cmd, CoreGlobal):
                 doParser.print_help()
 
         def arg_attach(self):
-                doParser = ArgumentParser(add_help = True, description="Attach a distribution to a repository in the organisation")
+                doParser = ArgumentParser(add_help = True, description="Attach a distribution to a repository in the organization")
 
                 mandatory = doParser.add_argument_group("mandatory arguments")
                 optional = doParser.add_argument_group("optional arguments")
@@ -142,7 +142,7 @@ class Org_Repo_Os_Cmd(Cmd, CoreGlobal):
                 doParser.print_help()
 
         def arg_detach(self):
-                doParser = ArgumentParser(add_help = True, description="Detach a distribution to a repository in the organisation")
+                doParser = ArgumentParser(add_help = True, description="Detach a distribution to a repository in the organization")
 
                 mandatory = doParser.add_argument_group("mandatory arguments")
                 optional = doParser.add_argument_group("optional arguments")
