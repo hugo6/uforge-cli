@@ -1,0 +1,68 @@
+{
+  "stack" : {
+    "name" : "uforge-cli-rpm-builder",
+    "version" : "1",
+    "installation" : {
+      "timezone" : "Europe/London",
+      "internetSettings" : "dhcp",
+      "kernelParams" : [ "rhgb", "quiet" ],
+      "rootUser" : {
+        "sshKeys" : [ ]
+      },
+      "users" : [ ],
+      "groups" : [ ],
+      "diskSize" : 4000,
+      "swapSize" : 512,
+      "displayLicenses" : false
+    },
+    "os" : {
+      "name" : "CentOS",
+      "version" : "6",
+      "arch" : "x86_64",
+      "profile": "minimal",
+      "pkgs" : [ {
+        "name" : "gcc"
+      }, {
+        "name" : "python-pip"
+      }, {
+        "name" : "python-devel"
+      }, {
+        "name" : "libxml2-devel"
+      }, {
+        "name" : "libxslt-devel"
+      }, {
+        "name" : "python-virtualenv"
+      }, {
+        "name" : "rpm-build"
+      }, {
+        "name" : "python-argparse"
+      } , {
+        "name" : "python-jinja2"
+      } ]
+    },
+    "bundles" : [ {
+      "name" : "rpmvenv",
+      "version" : "master",
+      "files" : [ {
+        "name" : "rpmvenv.zip",
+        "source" : "https://github.com/kevinconway/rpmvenv/archive/master.zip",
+        "destination" : "/tmp/",
+        "extract" : true
+      } ],
+      "license" : { }
+    } ],
+    "config": [
+    {
+      "name": "install-rpmvenv.sh",
+      "source": "config/install-rpmvenv.sh",
+      "type": "bootscript",
+      "frequency": "firstboot"
+    }
+  ]
+  },
+  "builders": [
+    {
+      "type": "targz"
+    }
+  ]
+}
