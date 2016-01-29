@@ -1,0 +1,25 @@
+{
+    "extensions": {
+        "enabled": [
+            "python_venv",
+            "blocks"
+        ]
+    },
+    "core": {
+        "group": "Application/System",
+        "license": "Apache V2",
+        "name": "uforge-cli",
+        "summary": "A command-line tool to interact with the UForge AppCenter webservice.",
+        "version": "1.0.0"
+    },
+    "python_venv": {
+        "name": "cli",
+        "path": "/opt/UShareSoft/uforge",
+        "flags": [""]
+    },
+    "blocks": {
+        "desc": [
+            "A command-line tool to interact with the UForge AppCenter webservice."
+        ]
+    }
+}
