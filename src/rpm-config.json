@@ -10,7 +10,7 @@
         "license": "Apache V2",
         "name": "uforge-cli",
         "summary": "A command-line tool to interact with the UForge AppCenter webservice.",
-        "version": "1.0.0"
+        "version": "3.6.0.1"
     },
     "python_venv": {
         "name": "cli",

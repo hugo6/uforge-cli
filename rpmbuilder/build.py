@@ -2,6 +2,7 @@
 import os
 import json
 import subprocess
+import sys
 
 
 # Command information
@@ -21,6 +22,11 @@ TEMPLATE_FILENAME = "template.json"
 if not os.path.isfile(HAMMR_CMD):
         print "Unable to find " + HAMMR_CMD + ". Please install it before."
         exit(1)
+
+if len(sys.argv) != 2:
+	print "You must call this script with the git release/tag in argument. example: python build.py 3.6.0.1"
+	exit(1)
+
 
 # Check there is a hammr authentication file
 if not os.path.isfile(HAMMR_CREDENTIALS):
@@ -85,8 +91,8 @@ SOURCE_PATH = os.path.dirname(os.path.dirname(file)) + "/src"
 
 # run the docker image
 print "run the Docker image"
-cmd = "docker run -t -i -v "+SOURCE_PATH + ":/mnt " + docker_image + " sh -c 'sh /etc/UShareSoft/firstboot/1_install-rpmvenv.sh; /bin/bash'"
+cmd = "docker run -t -i -v "+SOURCE_PATH + ":/mnt " + docker_image + " sh -c 'sh /etc/UShareSoft/firstboot/1_install-rpmvenv.sh'"
 ret = os.system(cmd)
 if ret != 0:
-        print "Error while creating template for " + docker_image
+        print "Error while running docker image: " + docker_image
         exit(1)
