@@ -103,6 +103,8 @@ class Org_Os_Cmd(Cmd, CoreGlobal):
                         org = org_utils.org_get(self.api, doArgs.org)
 
                         newDist = distribution()
+                        newDist.active = True
+                        newDist.preselected = False
                         newDist.arch = doArgs.arch
                         newDist.name = doArgs.name
                         newDist.version = doArgs.version
