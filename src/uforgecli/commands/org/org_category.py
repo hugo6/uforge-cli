@@ -47,11 +47,11 @@ class Org_Category_Cmd(Cmd, CoreGlobal):
                                 return 0
 
                         table = Texttable(200)
-                        table.set_cols_align(["l", "l"])
-                        table.header(["Id", "Category"])
+                        table.set_cols_align(["l", "l", "l"])
+                        table.header(["Id", "Category", "type"])
 
                         for item in allCategory:
-                                table.add_row([item.dbId, item.name])
+                                table.add_row([item.dbId, item.name, item.type])
                         print table.draw() + "\n"
                         printer.out("Found " + str(len(allCategory)) + " categories.")
                         return 0
@@ -73,6 +73,7 @@ class Org_Category_Cmd(Cmd, CoreGlobal):
                 optional = doParser.add_argument_group("optional arguments")
 
                 mandatory.add_argument('--name', dest='name', type=str, required=True, help="Name of the category to create in the organization.")
+                mandatory.add_argument('--type', dest='type', type=str, required=True, help="Type of the category to create in the organization. Possible values are : TEMPLATE, PROJECT, IMAGEFORMAT.")
                 optional.add_argument('--org', dest='org', type=str, required=False, help="The organization name. If no organization is provided, then the default organization is used.")
                 return doParser
 
@@ -95,6 +96,7 @@ class Org_Category_Cmd(Cmd, CoreGlobal):
                         if not Exist:
                                 newCategory = category()
                                 newCategory.name = doArgs.name
+                                newCategory.type = doArgs.type
 
                                 result = self.api.Orgs(org.dbId).Categories.Create(body=newCategory)
                                 printer.out("Category ["+newCategory.name+"] has successfully been created.", printer.OK)
@@ -138,14 +140,14 @@ class Org_Category_Cmd(Cmd, CoreGlobal):
                                                         deleteList.append(item)
                                                         break
                         if doArgs.ids is not None:
-                                for arg1 in doArgs.ids:
+                                for arg2 in doArgs.ids:
                                         for item2 in allCategory:
-                                                if arg1 == item.dbId:
+                                                if long(arg2) == item2.dbId:
                                                         deleteList.append(item2)
                                                         break
 
                         for item3 in deleteList:
-                                result = self.api.Orgs(org.dbId).Categories(item3.dbId).Delete()
+                                result = self.api.Orgs(org.dbId).Categories.Delete(Id=item3.dbId)
                                 printer.out("Category ["+item3.name+"] has been deleted.", printer.OK)
                         return 0
 
