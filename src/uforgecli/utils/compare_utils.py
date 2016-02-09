@@ -29,28 +29,37 @@ def compare(list, values, attrName, subattrName=None, otherList=None, linkProper
         # List to return
         returnList = []
 
-        for value in values:
-                for item in list:
-                        if otherList is None:
-                                # Get attribut "attrName" at first level
-                                compareName = getattr(item, attrName)
-                                if subattrName is None:
-                                        if fnmatch.fnmatch(compareName, value):
-                                                returnList.append(item)
-                                # If sub attribute requested, get it
-                                else:
-                                        compareName2 = getattr(compareName, subattrName)
-                                        if fnmatch.fnmatch(compareName2, value):
-                                                returnList.append(item)
-                        else:
-                                for otherItem in otherList:
-                                        if getattr(item, linkProperties[0]) == getattr(otherItem, linkProperties[1]):
-                                                compareName = getattr(otherItem, attrName)
-                                                if subattrName is None:
-                                                        if fnmatch.fnmatch(compareName, value):
-                                                                returnList.append(item)
-                                                else:
-                                                        compareName2 = getattr(compareName, subattrName)
-                                                        if fnmatch.fnmatch(compareName2, value):
-                                                                returnList.append(item)
+        if isinstance(values, basestring):
+                returnList.extend(filter_with_single_value(list, values, attrName, subattrName, otherList, linkProperties))
+        else:
+                for value in values:
+                        returnList.extend(filter_with_single_value(list, value, attrName, subattrName, otherList, linkProperties))
         return returnList
+
+
+def filter_with_single_value(list, value, attrName, subattrName=None, otherList=None, linkProperties=None):
+        filtered = []
+        for item in list:
+                if otherList is None:
+                        # Get attribut "attrName" at first level
+                        compareName = getattr(item, attrName)
+                        if subattrName is None:
+                                if fnmatch.fnmatch(compareName, value):
+                                        filtered.append(item)
+                        # If sub attribute requested, get it
+                        else:
+                                compareName2 = getattr(compareName, subattrName)
+                                if fnmatch.fnmatch(compareName2, value):
+                                        filtered.append(item)
+                else:
+                        for otherItem in otherList:
+                                if getattr(item, linkProperties[0]) == getattr(otherItem, linkProperties[1]):
+                                        compareName = getattr(otherItem, attrName)
+                                        if subattrName is None:
+                                                if fnmatch.fnmatch(compareName, value):
+                                                        filtered.append(item)
+                                        else:
+                                                compareName2 = getattr(compareName, subattrName)
+                                                if fnmatch.fnmatch(compareName2, value):
+                                                        filtered.append(item)
+        return filtered
