@@ -33,7 +33,7 @@ setup (
   
   # Fill in these to make your Egg ready for upload to
   # PyPI
-  name = 'uforge',
+  name = 'uforgecli',
   version = VERSION,
   description='',
   long_description='',
