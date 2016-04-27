@@ -112,7 +112,7 @@ class Org_Repo_Cmd(Cmd, CoreGlobal):
                 mandatory.add_argument('--repoUrl', dest='repoUrl', type=str, required=True, help="Url of the repository to create in the organization.")
                 mandatory.add_argument('--type', dest='type', type=str, required=True, help="Type of the repository to create in the organization ('RPM' or 'DEB').")
                 optional.add_argument('--org', dest='org', type=str, required=False, help="The organization name. If no organization is provided, then the default organization is used.")
-                optional.add_argument('--officiallySupported', dest='officiallySupported', action="store_true", required=False, help="The organization name. If no organization is provided, then the default organization is used.")
+                optional.add_argument('-o', '--officiallySupported', dest='officiallySupported', action="store_true", required=False, help="The organization name. If no organization is provided, then the default organization is used.")
 
                 return doParser
 
