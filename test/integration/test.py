@@ -192,145 +192,145 @@ class TestUser(TestMotherClass):
 
         def test_user_01_targetFormat_list(self):
                 user_targetFormat = User_TargetFormat_Cmd()
-                user_targetFormat.set_globals(api,login,password)
+                user_targetFormat.set_globals(api)
                 t = user_targetFormat.do_list("--account "+userTest)
                 self.assertEquals(t,0)
 
         def test_user_02_targetFormat_disable(self):
                 user_targetFormat = User_TargetFormat_Cmd()
-                user_targetFormat.set_globals(api,login,password)
+                user_targetFormat.set_globals(api)
                 t = user_targetFormat.do_disable("--account "+userTest+" --targetFormats "+userTargetFormatsTest)
                 self.assertEquals(t,0)
 
         def test_user_03_targetFormat_enable(self):
                 user_targetFormat = User_TargetFormat_Cmd()
-                user_targetFormat.set_globals(api,login,password)
+                user_targetFormat.set_globals(api)
                 t = user_targetFormat.do_enable("--account "+userTest+" --targetFormats "+userTargetFormatsTest)
                 self.assertEquals(t,0)
 
         def test_user_04_targetPlatform_list(self):
                 user_targetPlatform = User_TargetPlatform_Cmd()
-                user_targetPlatform.set_globals(api,login,password)
+                user_targetPlatform.set_globals(api)
                 t = user_targetPlatform.do_list("--account "+userTest)
                 self.assertEquals(t,0)
 
         def test_user_05_targetPlatform_disable(self):
                 user_targetPlatform = User_TargetPlatform_Cmd()
-                user_targetPlatform.set_globals(api,login,password)
+                user_targetPlatform.set_globals(api)
                 t = user_targetPlatform.do_disable("--account "+userTest+" --targetPlatforms "+userTargetPlatformsTest)
                 self.assertEquals(t,0)
 
         def test_user_06_targetPlatform_enable(self):
                 user_targetPlatform = User_TargetPlatform_Cmd()
-                user_targetPlatform.set_globals(api,login,password)
+                user_targetPlatform.set_globals(api)
                 t = user_targetPlatform.do_enable("--account "+userTest+" --targetPlatforms "+userTargetPlatformsTest)
                 self.assertEquals(t,0)
 
         def test_user_07_enable(self):
                 user = User_Cmd()
-                user.set_globals(api,login,password)
+                user.set_globals(api)
                 t = user.do_enable("--account "+userTest2)
                 self.assertEquals(t,0)
 
         def test_user_08_disable(self):
                 user = User_Cmd()
-                user.set_globals(api,login,password)
+                user.set_globals(api)
                 t = user.do_disable("--account "+userTest2)
                 self.assertEquals(t,0)
 
         def test_user_09_quota_list(self):
                 user_quota = User_Quota_Cmd()
-                user_quota.set_globals(api,login,password)
+                user_quota.set_globals(api)
                 t = user_quota.do_list("--account "+userTest2)
                 self.assertEquals(t,0)
 
         def test_user_10_list(self):
                 user = User_Cmd()
-                user.set_globals(api,login,password)
+                user.set_globals(api)
                 t = user.do_list(None)
                 self.assertEquals(t,0)
 
         def test_user_11_info(self):
                 user = User_Cmd()
-                user.set_globals(api,login,password)
+                user.set_globals(api)
                 t = user.do_info("--account "+userTest2)
                 self.assertEquals(t,0)
 
         def test_user_12_quota_modify(self):
                 user_quota = User_Quota_Cmd()
-                user_quota.set_globals(api,login,password)
+                user_quota.set_globals(api)
                 t = user_quota.do_modify("--account "+userTest2+" --type "+userQuotaTypeTest+" --limit "+userQuotaLimitTest)
                 self.assertEquals(t,0)
 
         def test_user_13_admin_demote(self):
                 user_admin = User_Admin_Cmd()
-                user_admin.set_globals(api,login,password)
+                user_admin.set_globals(api)
                 t = user_admin.do_demote("--account "+userTest2)
                 self.assertEquals(t,0)
 
         def test_user_14_admin_promote(self):
                 user_admin = User_Admin_Cmd()
-                user_admin.set_globals(api,login,password)
+                user_admin.set_globals(api)
                 t = user_admin.do_promote("--account "+userTest2)
                 self.assertEquals(t,0)
 
         def test_user_15_os_list(self):
                 user_os = User_Os_Cmd()
-                user_os.set_globals(api,login,password)
+                user_os.set_globals(api)
                 t = user_os.do_list("--account "+userTest)
                 self.assertEquals(t,0)
 
         def test_user_16_os_disable(self):
                 user_os = User_Os_Cmd()
-                user_os.set_globals(api,login,password)
+                user_os.set_globals(api)
                 t = user_os.do_disable("--account "+userTest+" --name Cen*")
                 self.assertEquals(t,0)
 
         def test_user_17_os_enable(self):
                 user_os = User_Os_Cmd()
-                user_os.set_globals(api,login,password)
+                user_os.set_globals(api)
                 t = user_os.do_enable("--account "+userTest+" --name Cen*")
                 self.assertEquals(t,0)
 
         def test_user_18_role_list(self):
                 user_role = User_Role_Cmd()
-                user_role.set_globals(api,login,password)
+                user_role.set_globals(api)
                 t = user_role.do_list("--account "+userTest)
                 self.assertEquals(t,0)
 
         def test_user_19_role_add(self):
                 user_role= User_Role_Cmd()
-                user_role.set_globals(api,login,password)
+                user_role.set_globals(api)
                 t = user_role.do_add("--account "+userTest+" --roles "+userRoleTest1+" "+userRoleTest2)
                 self.assertEquals(t,0)
 
         def test_user_20_role_remove(self):
                 user_role = User_Role_Cmd()
-                user_role.set_globals(api,login,password)
+                user_role.set_globals(api)
                 t = user_role.do_remove("--account "+userTest+" --roles "+userRoleTest1+" "+userRoleTest2)
                 self.assertEquals(t,0)
 
         def test_user_21_api_quota(self):
                 user_api = User_Api_Cmd()
-                user_api.set_globals(api,login,password)
+                user_api.set_globals(api)
                 t = user_api.do_quota("--account "+userTest+" --apimax 50")
                 self.assertEquals(t,0)
 
         def test_user_22_org_list(self):
                 user_org = User_Org_Cmd()
-                user_org.set_globals(api,login,password)
+                user_org.set_globals(api)
                 t = user_org.do_list("--account "+userTest)
                 self.assertEquals(t,0)
 
         def test_user_23_org_add(self):
                 user_org = User_Org_Cmd()
-                user_org.set_globals(api,login,password)
+                user_org.set_globals(api)
                 t = user_org.do_add("--account "+userTest2+" --admin")
                 self.assertEquals(t,0)
 
         def test_user_24_org_remove(self):
                 user_org = User_Org_Cmd()
-                user_org.set_globals(api,login,password)
+                user_org.set_globals(api)
                 t = user_org.do_remove("--account "+userTest2+" --admin")
                 self.assertEquals(t,0)
 
@@ -342,7 +342,7 @@ class TestUser(TestMotherClass):
                                 exist = True
                 if not exist:
                         user = User_Cmd()
-                        user.set_globals(api,login,password)
+                        user.set_globals(api)
                         t = user.do_create("--account " + userToCreate + " --code default --email " + userToCreate + "@usharesoft.com --accountPassword " + userToCreatePassword)
                         self.assertEquals(t,0)
                 else:
@@ -356,7 +356,7 @@ class TestEntitlement(TestMotherClass):
 
         def test_entitlement_01_list(self):
                 entitlement = Entitlement_Cmd()
-                entitlement.set_globals(api,login,password)
+                entitlement.set_globals(api)
                 t = entitlement.do_list("")
                 self.assertEquals(t,0)
 
@@ -386,109 +386,109 @@ class TestSubscription(TestMotherClass):
 
         def test_subscription_01_list(self):
                 subscription = Subscription_Cmd()
-                subscription.set_globals(api,login,password)
+                subscription.set_globals(api)
                 t = subscription.do_list("")
                 self.assertEquals(t,0)
 
         def test_subscription_02_info(self):
                 subscription = Subscription_Cmd()
-                subscription.set_globals(api,login,password)
+                subscription.set_globals(api)
                 t = subscription.do_info("--name "+subscriptionTest)
                 self.assertEquals(t,0)
 
         def test_subscription_03_create(self):
                 subscription = Subscription_Cmd()
-                subscription.set_globals(api,login,password)
+                subscription.set_globals(api)
                 t = subscription.do_create("--name "+subscriptionTest+" --code test")
                 self.assertEquals(t,0)
 
         def test_subscription_04_update(self):
                 subscription = Subscription_Cmd()
-                subscription.set_globals(api,login,password)
+                subscription.set_globals(api)
                 t = subscription.do_update("--name "+subscriptionTest+" --active")
                 self.assertEquals(t,0)
 
         def test_subscription_05_delete(self):
                 subscription = Subscription_Cmd()
-                subscription.set_globals(api,login,password)
+                subscription.set_globals(api)
                 t = subscription.do_delete("--name "+subscriptionTest)
                 self.assertEquals(t,0)
 
         def test_subscription_06_disable(self):
                 subscription = Subscription_Cmd()
-                subscription.set_globals(api,login,password)
+                subscription.set_globals(api)
                 t = subscription.do_disable("--name "+subscriptionTest)
                 self.assertEquals(t,0)
 
         def test_subscription_07_enable(self):
                 subscription = Subscription_Cmd()
-                subscription.set_globals(api,login,password)
+                subscription.set_globals(api)
                 t = subscription.do_enable("--name "+subscriptionTest)
                 self.assertEquals(t,0)
 
         def test_subscription_08_admin_add(self):
                 subscription_admin = Subscription_Admins()
-                subscription_admin.set_globals(api,login,password)
+                subscription_admin.set_globals(api)
                 t = subscription_admin.do_add("--name "+subscriptionTest+" --admins "+subscriptionAdminTest1+" "+subscriptionAdminTest2)
                 self.assertEquals(t,0)
 
         def test_subscription_09_admin_remove(self):
                 subscription_admin = Subscription_Admins()
-                subscription_admin.set_globals(api,login,password)
+                subscription_admin.set_globals(api)
                 t = subscription_admin.do_remove("--name "+subscriptionTest+" --admins "+subscriptionAdminTest1+" "+subscriptionAdminTest2)
                 self.assertEquals(t,0)
 
         def test_subscription_10_role_add(self):
                 subscription_role = Subscription_Roles()
-                subscription_role.set_globals(api,login,password)
+                subscription_role.set_globals(api)
                 t = subscription_role.do_add("--name "+subscriptionTest+" --roles "+subscriptionRoleTest1+" "+subscriptionRoleTest2)
                 self.assertEquals(t,0)
 
         def test_subscription_11_role_remove(self):
                 subscription_role = Subscription_Roles()
-                subscription_role.set_globals(api,login,password)
+                subscription_role.set_globals(api)
                 t = subscription_role.do_remove("--name "+subscriptionTest+" --roles "+subscriptionRoleTest1+" "+subscriptionRoleTest2)
                 self.assertEquals(t,0)
 
         def test_subscription_12_targetFormat_add(self):
                 subscription_targetFormat = Subscription_TargetFormat()
-                subscription_targetFormat.set_globals(api,login,password)
+                subscription_targetFormat.set_globals(api)
                 t = subscription_targetFormat.do_add("--name "+subscriptionTest+" --targetFormats "+subscriptionTargetFormatTest1+" "+subscriptionTargetFormatTest2)
                 self.assertEquals(t,0)
 
         def test_subscription_13_targetFormat_remove(self):
                 subscription_targetFormat = Subscription_TargetFormat()
-                subscription_targetFormat.set_globals(api,login,password)
+                subscription_targetFormat.set_globals(api)
                 t = subscription_targetFormat.do_remove("--name "+subscriptionTest+" --targetFormats "+subscriptionTargetFormatTest1+" "+subscriptionTargetFormatTest2)
                 self.assertEquals(t,0)
 
         def test_subscription_14_targetPlatform_add(self):
                 subscription_targetPlatform = Subscription_TargetPlatform()
-                subscription_targetPlatform.set_globals(api,login,password)
+                subscription_targetPlatform.set_globals(api)
                 t = subscription_targetPlatform.do_add("--name "+subscriptionTest+" --targetPlatforms "+subscriptionTargetPlatformTest1+" "+subscriptionTargetPlatformTest2)
                 self.assertEquals(t,0)
 
         def test_subscription_15_targetPlatform_remove(self):
                 subscription_targetPlatform = Subscription_TargetPlatform()
-                subscription_targetPlatform.set_globals(api,login,password)
+                subscription_targetPlatform.set_globals(api)
                 t = subscription_targetPlatform.do_remove("--name "+subscriptionTest+" --targetPlatforms "+subscriptionTargetPlatformTest1+" "+subscriptionTargetPlatformTest2)
                 self.assertEquals(t,0)
 
         def test_subscription_16_os_add(self):
                 subscription_os = Subscription_Os()
-                subscription_os.set_globals(api,login,password)
+                subscription_os.set_globals(api)
                 t = subscription_os.do_add("--name "+subscriptionTest+" --os "+subscriptionOsTest1)
                 self.assertEquals(t,0)
 
         def test_subscription_17_os_remove(self):
                 subscription_os = Subscription_Os()
-                subscription_os.set_globals(api,login,password)
+                subscription_os.set_globals(api)
                 t = subscription_os.do_remove("--name "+subscriptionTest+" --os "+subscriptionOsTest1)
                 self.assertEquals(t,0)
 
         def test_subscription_18_quota_update(self):
                 subscription_quota = Subscription_Quota()
-                subscription_quota.set_globals(api,login,password)
+                subscription_quota.set_globals(api)
                 t = subscription_quota.do_update(userSubscriptionQuotaUpdate)
                 self.assertEquals(t,0)
 
@@ -507,13 +507,13 @@ class TestRole(TestMotherClass):
 
         def test_role_01_list(self):
                 role = Role_Cmd()
-                role.set_globals(api,login,password)
+                role.set_globals(api)
                 t = role.do_list("")
                 self.assertEquals(t,0)
 
         def test_role_02_info(self):
                 role = Role_Cmd()
-                role.set_globals(api,login,password)
+                role.set_globals(api)
                 t = role.do_info("--name "+roleRoleTest)
                 self.assertEquals(t,0)
 
@@ -527,25 +527,25 @@ class TestRole(TestMotherClass):
                         unittest.skip("Role has already been created.")
                 else:
                         role = Role_Cmd()
-                        role.set_globals(api,login,password)
+                        role.set_globals(api)
                         t = role.do_create("--name "+roleRoleCreateTest)
                         self.assertEquals(t,0)
 
         def test_role_05_entitlement_add(self):
                 role_entitlement = Role_Entitlement_Cmd()
-                role_entitlement.set_globals(api,login,password)
+                role_entitlement.set_globals(api)
                 t = role_entitlement.do_add("--name "+roleRoleCreateTest+" --entitlements "+roleEntitlementCreateTest1+" "+roleEntitlementCreateTest2)
                 self.assertEquals(t,0)
 
         def test_role_06_entitlement_remove(self):
                 role_entitlement = Role_Entitlement_Cmd()
-                role_entitlement.set_globals(api,login,password)
+                role_entitlement.set_globals(api)
                 t = role_entitlement.do_remove("--name "+roleRoleCreateTest+" --entitlements "+roleEntitlementCreateTest1+" "+roleEntitlementCreateTest2)
                 self.assertEquals(t,0)
 
         def test_role_04_delete(self):
                 role = Role_Cmd()
-                role.set_globals(api,login,password)
+                role.set_globals(api)
                 t = role.do_delete("--name "+roleRoleCreateTest)
                 self.assertEquals(t,0)
 
@@ -560,13 +560,13 @@ class TestImages(TestMotherClass):
 
         def test_images_01_list(self):
                 images = Images_Cmd()
-                images.set_globals(api,login,password)
+                images.set_globals(api)
                 t = images.do_list("--account "+userTest)
                 self.assertEquals(t,0)
 
         def test_images_02_info(self):
                 images = Images_Cmd()
-                images.set_globals(api,login,password)
+                images.set_globals(api)
                 t = images.do_info("--account "+userTest+" --id "+imagesIdTest)
                 self.assertEquals(t,0)
 
@@ -622,97 +622,97 @@ class TestOrg(TestMotherClass):
 
         def test_org_01_list(self):
                 org = Org_Cmd()
-                org.set_globals(api,login,password)
+                org.set_globals(api)
                 t = org.do_list("")
                 self.assertEquals(t,0)
 
         def test_org_02_info(self):
                 org = Org_Cmd()
-                org.set_globals(api,login,password)
+                org.set_globals(api)
                 t = org.do_info("")
                 self.assertEquals(t,0)
 
         def test_org_03_user_list(self):
                 org_user = Org_User_Cmd()
-                org_user.set_globals(api,login,password)
+                org_user.set_globals(api)
                 t = org_user.do_list("")
                 self.assertEquals(t,0)
 
         def test_org_04_category_list(self):
                 org_category = Org_Category_Cmd()
-                org_category.set_globals(api,login,password)
+                org_category.set_globals(api)
                 t = org_category.do_list("")
                 self.assertEquals(t,0)
 
         def test_org_05_category_create(self):
                 org_category = Org_Category_Cmd()
-                org_category.set_globals(api,login,password)
+                org_category.set_globals(api)
                 t = org_category.do_create("--name " +orgCategoryTestCategoryName + " --org " + orgCreate)
                 self.assertEquals(t,0)
 
         def test_org_06_category_delete(self):
                 org_category = Org_Category_Cmd()
-                org_category.set_globals(api,login,password)
+                org_category.set_globals(api)
                 t = org_category.do_delete("--name " +orgCategoryTestCategoryName + " --org " + orgCreate)
                 self.assertEquals(t,0)
 
         def test_org_07_category_reset(self):
                 org_category = Org_Category_Cmd()
-                org_category.set_globals(api,login,password)
+                org_category.set_globals(api)
                 t = org_category.do_reset("--org " + orgCreate)
                 self.assertEquals(t,0)
 
         def test_org_08_golden_list(self):
                 org_golden = Org_Golden_Cmd()
-                org_golden.set_globals(api,login,password)
+                org_golden.set_globals(api)
                 t = org_golden.do_list(orgGoldenListArgs)
                 self.assertEquals(t,0)
 
         def test_org_09_golden_create(self):
                 org_golden = Org_Golden_Cmd()
-                org_golden.set_globals(api,login,password)
+                org_golden.set_globals(api)
                 t = org_golden.do_create(orgGoldenCreate)
                 self.assertEquals(t,0)
 
         def test_org_10_os_list(self):
                 org_os = Org_Os_Cmd()
-                org_os.set_globals(api,login,password)
+                org_os.set_globals(api)
                 t = org_os.do_list("")
                 self.assertEquals(t,0)
 
         def test_org_11_os_add(self):
                 org_os = Org_Os_Cmd()
-                org_os.set_globals(api,login,password)
+                org_os.set_globals(api)
                 t = org_os.do_add(orgOsCreate)
                 self.assertEquals(t,0)
 
         def test_org_12_os_disable(self):
                 org_os = Org_Os_Cmd()
-                org_os.set_globals(api,login,password)
+                org_os.set_globals(api)
                 t = org_os.do_disable(orgOsEnableDisable)
                 self.assertEquals(t,0)
 
         def test_org_13_os_enable(self):
                 org_os = Org_Os_Cmd()
-                org_os.set_globals(api,login,password)
+                org_os.set_globals(api)
                 t = org_os.do_enable(orgOsEnableDisable)
                 self.assertEquals(t,0)
 
         def test_org_14_repo_list(self):
                 org_repo = Org_Repo_Cmd()
-                org_repo.set_globals(api,login,password)
+                org_repo.set_globals(api)
                 t = org_repo.do_list("")
                 self.assertEquals(t,0)
 
         def test_org_15_repo_create(self):
                 org_repo = Org_Repo_Cmd()
-                org_repo.set_globals(api,login,password)
+                org_repo.set_globals(api)
                 t = org_repo.do_create(orgRepoCreate)
                 self.assertEquals(t,0)
 
         def test_org_16_repo_update(self):
                 org_repo = Org_Repo_Cmd()
-                org_repo.set_globals(api,login,password)
+                org_repo.set_globals(api)
                 t = org_repo.do_update(orgRepoUpdate)
                 self.assertEquals(t,0)
 
@@ -725,7 +725,7 @@ class TestOrg(TestMotherClass):
                                 exist = True
                                 orgRepoDeleteId = item.dbId
                                 org_repo = Org_Repo_Cmd()
-                                org_repo.set_globals(api,login,password)
+                                org_repo.set_globals(api)
                                 t = org_repo.do_delete("--ids " + orgRepoDeleteId)
                                 self.assertEquals(t,0)
                 if not exist:
@@ -733,67 +733,67 @@ class TestOrg(TestMotherClass):
 
         def test_org_18_repo_os_list(self):
                 org_repo_os = Org_Repo_Os_Cmd()
-                org_repo_os.set_globals(api,login,password)
+                org_repo_os.set_globals(api)
                 t = org_repo_os.do_list("--repoId " + orgRepoOsRepoId)
                 self.assertEquals(t,0)
 
         def test_org_19_repo_os_attach(self):
                 org_repo_os = Org_Repo_Os_Cmd()
-                org_repo_os.set_globals(api,login,password)
+                org_repo_os.set_globals(api)
                 t = org_repo_os.do_attach("--repoIds " + orgRepoOsRepoId + " " + orgRepoOsAttachDetach)
                 self.assertEquals(t,0)
 
         def test_org_20_repo_os_detach(self):
                 org_repo_os = Org_Repo_Os_Cmd()
-                org_repo_os.set_globals(api,login,password)
+                org_repo_os.set_globals(api)
                 t = org_repo_os.do_detach("--repoIds " + orgRepoOsRepoId + " " + orgRepoOsAttachDetach)
                 self.assertEquals(t,0)
 
         def test_org_21_format_list(self):
                 org_format = Org_Format_Cmd()
-                org_format.set_globals(api,login,password)
+                org_format.set_globals(api)
                 t = org_format.do_list("")
                 self.assertEquals(t,0)
 
         def test_org_22_format_enable(self):
                 org_format = Org_Format_Cmd()
-                org_format.set_globals(api,login,password)
+                org_format.set_globals(api)
                 t = org_format.do_enable("--format " + orgFormatEnableDisable)
                 self.assertEquals(t,0)
 
         def test_org_23_format_disable(self):
                 org_format = Org_Format_Cmd()
-                org_format.set_globals(api,login,password)
+                org_format.set_globals(api)
                 t = org_format.do_disable("--format " + orgFormatEnableDisable)
                 self.assertEquals(t,0)
 
         def test_org_24_targetFormat_list(self):
                 org_targetFormat = Org_TargetFormat_Cmd()
-                org_targetFormat.set_globals(api,login,password)
+                org_targetFormat.set_globals(api)
                 t = org_targetFormat.do_list(None)
                 self.assertEquals(t,0)
 
         def test_org_25_targetFormat_createVirtual(self):
                 org_targetFormat = Org_TargetFormat_Cmd()
-                org_targetFormat.set_globals(api,login,password)
+                org_targetFormat.set_globals(api)
                 t = org_targetFormat.do_create("--name " + orgTargetFormatCreateVirtual + " --format vbox --category " + orgTargetFormatCategoryVirtual + " --type virtual")
                 self.assertEquals(t,0)
 
         def test_org_26_targetFormat_createCloud(self):
                 org_targetFormat = Org_TargetFormat_Cmd()
-                org_targetFormat.set_globals(api,login,password)
+                org_targetFormat.set_globals(api)
                 t = org_targetFormat.do_create("--name " + orgTargetFormatCreateCloud + " --format openstackqcow2 --category " + orgTargetFormatCategoryCloud + " --type cloud -- credAccountType openstack --file data/UShareSoft.svg")
                 self.assertEquals(t,0)
 
         def test_org_27_targetFormat_createPhysical(self):
                 org_targetFormat = Org_TargetFormat_Cmd()
-                org_targetFormat.set_globals(api,login,password)
+                org_targetFormat.set_globals(api)
                 t = org_targetFormat.do_create("--name " + orgTargetFormatCreatePhysical + " --format ISO --category " + orgTargetFormatCategoryPhysical + " --type physical")
                 self.assertEquals(t,0)
 
         def test_org_28_targetFormat_update(self):
                 org_targetFormat = Org_TargetFormat_Cmd()
-                org_targetFormat.set_globals(api,login,password)
+                org_targetFormat.set_globals(api)
                 id = get_targetFormat_id(org_targetFormat, orgTargetFormatCreatePhysical)
                 if id is not None and id !="":
                         t = org_targetFormat.do_update("--id " + id + " --name " + orgTargetFormatCreatePhysical+"Updated")
@@ -803,7 +803,7 @@ class TestOrg(TestMotherClass):
 
         def test_org_29_targetFormat_addTargetPlatform(self):
                 org_targetFormat = Org_TargetFormat_Cmd()
-                org_targetFormat.set_globals(api,login,password)
+                org_targetFormat.set_globals(api)
                 id = get_targetFormat_id(org_targetFormat, orgTargetFormatCreateCloud)
                 if id is not None and id !="":
                         t = org_targetFormat.do_addTargetPlatform("--id " + id + " --targetPlatforms " + orgTargetPlatformOpenStack)
@@ -813,7 +813,7 @@ class TestOrg(TestMotherClass):
 
         def test_org_30_targetFormat_listTargetPlatform(self):
                 org_targetFormat = Org_TargetFormat_Cmd()
-                org_targetFormat.set_globals(api,login,password)
+                org_targetFormat.set_globals(api)
                 id = get_targetFormat_id(org_targetFormat, orgTargetFormatCreateCloud)
                 if id is not None and id !="":
                         t = org_targetFormat.do_listTargetPlatform("--id " + id)
@@ -823,7 +823,7 @@ class TestOrg(TestMotherClass):
 
         def test_org_31_targetFormat_removeTargetPlatform(self):
                 org_targetFormat = Org_TargetFormat_Cmd()
-                org_targetFormat.set_globals(api,login,password)
+                org_targetFormat.set_globals(api)
                 id = get_targetFormat_id(org_targetFormat, orgTargetFormatCreateCloud)
                 if id is not None and id !="":
                         t = org_targetFormat.do_removeTargetPlatform("--id " + id + " --targetPlatforms " + orgTargetPlatformOpenStack)
@@ -833,19 +833,19 @@ class TestOrg(TestMotherClass):
 
         def test_org_32_targetFormat_disable(self):
                 org_targetFormat = Org_TargetFormat_Cmd()
-                org_targetFormat.set_globals(api,login,password)
+                org_targetFormat.set_globals(api)
                 t = org_targetFormat.do_disable("--targetFormats " + orgTargetFormatsEnableDisable)
                 self.assertEquals(t,0)
 
         def test_org_33_targetFormat_enable(self):
                 org_targetFormat = Org_TargetFormat_Cmd()
-                org_targetFormat.set_globals(api,login,password)
+                org_targetFormat.set_globals(api)
                 t = org_targetFormat.do_enable("--targetFormats " + orgTargetFormatsEnableDisable)
                 self.assertEquals(t,0)
 
         def test_org_34_targetFormat_delete(self):
                 org_targetFormat = Org_TargetFormat_Cmd()
-                org_targetFormat.set_globals(api,login,password)
+                org_targetFormat.set_globals(api)
                 msgNoDeleted = None
                 id = get_targetFormat_id(org_targetFormat, orgTargetFormatCreateVirtual)
                 if id is not None and id !="":
@@ -870,19 +870,19 @@ class TestOrg(TestMotherClass):
 
         def test_org_35_targetPlatform_list(self):
                 org_targetPlatform = Org_TargetPlatform_Cmd()
-                org_targetPlatform.set_globals(api,login,password)
+                org_targetPlatform.set_globals(api)
                 t = org_targetPlatform.do_list(None)
                 self.assertEquals(t,0)
 
         def test_org_36_targetPlatform_create(self):
                 org_targetPlatform = Org_TargetPlatform_Cmd()
-                org_targetPlatform.set_globals(api,login,password)
+                org_targetPlatform.set_globals(api)
                 t = org_targetPlatform.do_create("--name " + orgTargetPlatformCreateAbiquo + " --type abiquo --file data/UShareSoft.svg")
                 self.assertEquals(t,0)
 
         def test_org_37_targetPlatform_update(self):
                 org_targetPlatform = Org_TargetPlatform_Cmd()
-                org_targetPlatform.set_globals(api,login,password)
+                org_targetPlatform.set_globals(api)
                 id = get_targetPlatform_id(org_targetPlatform, orgTargetPlatformCreateAbiquo)
                 if id is not None and id !="":
                         t = org_targetPlatform.do_update("--id " + id + " --name " + orgTargetPlatformCreateAbiquo+"Updated")
@@ -892,7 +892,7 @@ class TestOrg(TestMotherClass):
 
         def test_org_38_targetPlatform_addTargetFormat(self):
                 org_targetPlatform = Org_TargetPlatform_Cmd()
-                org_targetPlatform.set_globals(api,login,password)
+                org_targetPlatform.set_globals(api)
                 id = get_targetPlatform_id(org_targetPlatform, orgTargetPlatformCreateAbiquo+"Updated")
                 if id is not None and id !="":
                         t = org_targetPlatform.do_addTargetFormat("--id " + id + " --targetFormats " + orgTargetFormatAbiquo)
@@ -902,7 +902,7 @@ class TestOrg(TestMotherClass):
 
         def test_org_39_targetPlatform_listTargetFormat(self):
                 org_targetPlatform = Org_TargetPlatform_Cmd()
-                org_targetPlatform.set_globals(api,login,password)
+                org_targetPlatform.set_globals(api)
                 id = get_targetPlatform_id(org_targetPlatform, orgTargetPlatformCreateAbiquo+"Updated")
                 if id is not None and id !="":
                         t = org_targetPlatform.do_listTargetFormat("--id " + id)
@@ -912,7 +912,7 @@ class TestOrg(TestMotherClass):
 
         def test_org_40_targetPlatform_removeTargetFormat(self):
                 org_targetPlatform = Org_TargetPlatform_Cmd()
-                org_targetPlatform.set_globals(api,login,password)
+                org_targetPlatform.set_globals(api)
                 id = get_targetPlatform_id(org_targetPlatform, orgTargetPlatformCreateAbiquo+"Updated")
                 if id is not None and id !="":
                         t = org_targetPlatform.do_removeTargetFormat("--id " + id + " --targetFormats " + orgTargetFormatAbiquo)
@@ -922,19 +922,19 @@ class TestOrg(TestMotherClass):
 
         def test_org_41_targetPlatform_disable(self):
                 org_targetPlatform = Org_TargetPlatform_Cmd()
-                org_targetPlatform.set_globals(api,login,password)
+                org_targetPlatform.set_globals(api)
                 t = org_targetPlatform.do_disable("--targetPlatforms " + orgTargetPlatformsEnableDisable)
                 self.assertEquals(t,0)
 
         def test_org_42_targetPlatform_enable(self):
                 org_targetPlatform = Org_TargetPlatform_Cmd()
-                org_targetPlatform.set_globals(api,login,password)
+                org_targetPlatform.set_globals(api)
                 t = org_targetPlatform.do_enable("--targetPlatforms " + orgTargetPlatformsEnableDisable)
                 self.assertEquals(t,0)
 
         def test_org_43_targetPlatform_delete(self):
                 org_targetPlatform = Org_TargetPlatform_Cmd()
-                org_targetPlatform.set_globals(api,login,password)
+                org_targetPlatform.set_globals(api)
                 msgNoDeleted = None
                 id = get_targetPlatform_id(org_targetPlatform, orgTargetPlatformCreateAbiquo+"Updated")
                 if id is not None and id !="":
@@ -953,7 +953,7 @@ class TestOrg(TestMotherClass):
                         unittest.skip("Organization already created.")
                 else:
                         org = Org_Cmd()
-                        org.set_globals(api,login,password)
+                        org.set_globals(api)
                         t = org.do_create("--org " + orgCreate)
                         self.assertEquals(t,0)
 
@@ -971,31 +971,31 @@ class TestOs(TestMotherClass):
 
         def test_os_01_list(self):
                 org = Os_Cmd()
-                org.set_globals(api,login,password)
+                org.set_globals(api)
                 t = org.do_list("")
                 self.assertEquals(t,0)
 
         def test_os_02_milestone_add(self):
                 os_milestone = Os_Milestone_Cmd()
-                os_milestone.set_globals(api,login,password)
+                os_milestone.set_globals(api)
                 t = os_milestone.do_add(osMilestoneVersion + " --date " + osMilestoneAddNewDate + " --name " + osMilestoneAddNewName)
                 self.assertEquals(t,0)
 
         def test_os_03_milestone_list(self):
                 os_milestone = Os_Milestone_Cmd()
-                os_milestone.set_globals(api,login,password)
+                os_milestone.set_globals(api)
                 t = os_milestone.do_list(osMilestoneVersion)
                 self.assertEquals(t,0)
 
         def test_os_04_milestone_modify(self):
                 os_milestone = Os_Milestone_Cmd()
-                os_milestone.set_globals(api,login,password)
+                os_milestone.set_globals(api)
                 t = os_milestone.do_modify(osMilestoneVersion + " --date " + osMilestoneModifyNewDate + " --name " + osMilestoneAddNewName)
                 self.assertEquals(t,0)
 
         def test_os_05_milestone_remove(self):
                 os_milestone = Os_Milestone_Cmd()
-                os_milestone.set_globals(api,login,password)
+                os_milestone.set_globals(api)
                 t = os_milestone.do_remove(osMilestoneVersion + " --name " + osMilestoneAddNewDate)
                 self.assertEquals(t,0)
 
@@ -1010,13 +1010,13 @@ class TestPimages(TestMotherClass):
 
         def test_pimages_01_list(self):
                 pimages = Pimages_Cmd()
-                pimages.set_globals(api,login,password)
+                pimages.set_globals(api)
                 t = pimages.do_list("--account " + userTest)
                 self.assertEquals(t,0)
 
         def test_pimages_02_info(self):
                 pimages = Pimages_Cmd()
-                pimages.set_globals(api,login,password)
+                pimages.set_globals(api)
                 t = pimages.do_info("--account " + userTest + " --id 3")
                 self.assertEquals(t,0)
 
@@ -1035,37 +1035,37 @@ class TestUserGroup(TestMotherClass):
 
         def test_usergrp_01_create(self):
                 usergrp = Usergrp_Cmd()
-                usergrp.set_globals(api,login,password)
+                usergrp.set_globals(api)
                 t = usergrp.do_create("--name " + usergrpTest + " --email " + usergrpTest + "@usharesoft.com --usergrpPassword " + usergrpTest + " --accounts " + usergrpTestAddAccounts)
                 self.assertEquals(t,0)
 
         def test_usergrp_02_list(self):
                 usergrp = Usergrp_Cmd()
-                usergrp.set_globals(api,login,password)
+                usergrp.set_globals(api)
                 t = usergrp.do_list("")
                 self.assertEquals(t,0)
 
         def test_usergrp_03_info(self):
                 usergrp = Usergrp_Cmd()
-                usergrp.set_globals(api,login,password)
+                usergrp.set_globals(api)
                 t = usergrp.do_info("--name " + usergrpTest)
                 self.assertEquals(t,0)
 
         def test_usergrp_04_delete(self):
                 usergrp = Usergrp_Cmd()
-                usergrp.set_globals(api,login,password)
+                usergrp.set_globals(api)
                 t = usergrp.do_delete("--name " + usergrpTest)
                 self.assertEquals(t,0)
 
         def test_usergrp_05_user_add(self):
                 usergrp_user = UserGroup_User_Cmd()
-                usergrp_user.set_globals(api,login,password)
+                usergrp_user.set_globals(api)
                 t = usergrp_user.do_add("--name " + usergrpTest + " --accounts " + usergrpTestUserAddAfter)
                 self.assertEquals(t,0)
 
         def test_usergrp_06_user_remove(self):
                 usergrp_user = UserGroup_User_Cmd()
-                usergrp_user.set_globals(api,login,password)
+                usergrp_user.set_globals(api)
                 t = usergrp_user.do_add("--name " + usergrpTest + " --accounts " + usergrpTestUserAddAfter)
                 self.assertEquals(t,0)
 
@@ -1082,7 +1082,7 @@ class TestTemplate(TestMotherClass):
 
         def test_template_01_list(self):
                 template = Template_Cmd()
-                template.set_globals(api,login,password)
+                template.set_globals(api)
                 t = template.do_list("--account root")
                 self.assertEquals(t,0)
 
@@ -1094,7 +1094,7 @@ class TestTemplate(TestMotherClass):
                 else:
                         templateID = str(templateList[0].dbId)
                         template = Template_Cmd()
-                        template.set_globals(api,login,password)
+                        template.set_globals(api)
                         t = template.do_info("--account " + userTest + " --id " + templateID + "")
                         self.assertEquals(t,0)
 
@@ -1106,7 +1106,7 @@ class TestTemplate(TestMotherClass):
                 else:
                         templateID = str(templateList[0].dbId)
                         template = Template_Cmd()
-                        template.set_globals(api,login,password)
+                        template.set_globals(api)
                         t = template.do_images("--account " + userTest + " --id " + templateID)
                         self.assertEquals(t,0)
 
@@ -1118,7 +1118,7 @@ class TestTemplate(TestMotherClass):
                 else:
                         templateID = str(templateList[0].dbId)
                         template = Template_Cmd()
-                        template.set_globals(api,login,password)
+                        template.set_globals(api)
                         t = template.do_pimages("--account " + userTest + " --id " + templateID)
                         self.assertEquals(t,0)
 

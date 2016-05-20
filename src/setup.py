@@ -6,7 +6,7 @@ import sys
 
 # Declare your packages' dependencies here, for eg:
 requires=[
-           'uforge_python_sdk==3.6.0',
+           'uforge_python_sdk>=3.6.0.4',
                     'httplib2==0.9',
                     'cmd2==0.6.7',                    
                     'texttable>=0.8.1',
@@ -16,7 +16,7 @@ requires=[
                     'hurry.filesize==0.9',
                     'termcolor==1.1.0',
                     'xmlrunner==1.7.7',
-                    'ussclicore']
+                    'ussclicore>=1.0.5']
                     
 if os.name != "nt":
 	if not "linux" in sys.platform:
