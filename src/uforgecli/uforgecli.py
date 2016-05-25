@@ -124,7 +124,7 @@ class Uforgecli(Cmd):
 
         def cmdloop(self, args):
                 if len(args):
-                        code = self.run_commands_at_invocation([str.join(' ', args)])
+                        code = self.run_commands_at_invocation([self.join_args(args)])
                         sys.exit(code)
                 else:
                         self._cmdloop()
