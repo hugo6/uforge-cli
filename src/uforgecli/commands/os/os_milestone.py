@@ -114,10 +114,8 @@ class Os_Milestone_Cmd(Cmd, CoreGlobal):
                                         if item.date is None:
                                                 date = "Unknown"
                                         else:
-                                                date = item.releaseDate
+                                                date = item.date
                                         table.add_row([item.name, item.source, item.description, date])
-                                        print item.releaseDate
-                                        print type(item.releaseDate)
                                 print table.draw() + "\n"
                         else:
                                 printer.out("There is no milestone for [" + os.name + "].")

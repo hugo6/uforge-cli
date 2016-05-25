@@ -124,7 +124,7 @@ class Uforgecli(Cmd):
 
         def cmdloop(self, args):
                 if len(args):
-                        code = self.run_commands_at_invocation([str.join(' ', args)])
+                        code = self.run_commands_at_invocation([self.join_args(args)])
                         sys.exit(code)
                 else:
                         self._cmdloop()
@@ -152,7 +152,7 @@ def generate_base_doc(app, uforgecli_help):
 def set_globals_cmds(subCmds):
         for cmd in subCmds:
                 if hasattr(subCmds[cmd], 'set_globals'):
-                        subCmds[cmd].set_globals(api, username, password)
+                        subCmds[cmd].set_globals(api)
                         if hasattr(subCmds[cmd], 'subCmds'):
                                 set_globals_cmds(subCmds[cmd].subCmds)
 
@@ -187,16 +187,24 @@ if mainArgs.help and not mainArgs.cmds:
 if mainArgs.user is not None and mainArgs.url is not None:
         if not mainArgs.password:
                 mainArgs.password = getpass.getpass()
-        username=mainArgs.user
-        password=mainArgs.password
-        url=mainArgs.url
-        if mainArgs.crypt == True:
-                sslAutosigned = True
-        else:
-                sslAutosigned = False
+        username = mainArgs.user
+        password = mainArgs.password
+        url = mainArgs.url
+        apikeysAuthentication = False
+
+elif mainArgs.publickey is not None and mainArgs.secretkey is not None and mainArgs.url is not None:
+        publickey = mainArgs.publickey
+        secretkey = mainArgs.secretkey
+        url = mainArgs.url
+        apikeysAuthentication = True
 else:
         mainParser.print_help()
         exit(0)
+
+if mainArgs.crypt == True:
+        sslAutosigned = True
+else:
+        sslAutosigned = False
 
 
 
@@ -206,8 +214,15 @@ client = httplib2.Http(disable_ssl_certificate_validation=sslAutosigned, timeout
 #activate http caching
 #client = httplib2.Http(generics_utils.get_Uforgecli_dir()+os.sep+"cache")
 headers = {}
-headers['Authorization'] = 'Basic ' + base64.encodestring( username + ':' + password )
-api = Api(url, client = client, headers = headers)
+apikeys = {}
+
+if apikeysAuthentication:
+        apikeys['publickey'] = publickey
+        apikeys['secretkey'] = secretkey
+else:
+        headers['Authorization'] = 'Basic ' + base64.encodestring( username + ':' + password )
+
+api = Api(url, client = client, headers = headers, apikeys = apikeys)
 set_globals_cmds(app.subCmds)
 
 if mainArgs.help and len(mainArgs.cmds)>=1:
